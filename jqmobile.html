@@ -9,10 +9,22 @@
 </head>
 <body>
 
+<script>
+function setUsername(){
+var username = localStorage.getItem('username');
+if(username==null){ window.location='#login'; return; }
+$('#username').text(username);
+}
+
+$(function(){
+setUsername();	
+});
+</script>
+
 <div data-role="page" id="login">
   <div data-role="main" class="ui-content">
-    <form onsubmit="username = $('#email').val(); $('#username').text(username); window.location='#home'; return false;">
-    <input id="email" type="email" placeholder="insert your email to login"><br>
+    <form onsubmit="localStorage.setItem('username', $('#email').val()); setUsername(); window.location='#home'; return false;">
+    <input id="email" type="email" placeholder="insert your email to login" required><br>
 	<input type="submit" value="Login!">
     </form>
   </div>
@@ -20,7 +32,9 @@
 
 <div data-role="page" id="home">
   <div data-role="main" class="ui-content">
-    <p>Welcome <span id="username"></span>!</p>
+    <p>Welcome <span id="username">(username)</span>!</p>
+    <input type="search" placeholder="search a tag">
+    <button onclick="localStorage.removeItem('username'); setUsername();">Logout</button>
   </div>
 </div> 
 
