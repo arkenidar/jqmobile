@@ -33,7 +33,16 @@ setUsername();
 <div data-role="page" id="home">
   <div data-role="main" class="ui-content">
     <p>Welcome <span id="username">(username)</span>!</p>
-    <input type="search" placeholder="search a tag">
+    <input type="search" placeholder="search a tag" list="suggestions">
+
+<datalist id="suggestions">
+  <option value="Programming Language: Java">
+  <option value="Programming Language: C++">
+  <option value="Programming Language: PHP">
+  <option value="Programming Language: JavaScript">
+  <option value="Programming Language: C#">
+</datalist>
+
     <button onclick="localStorage.removeItem('username'); setUsername();">Logout</button>
   </div>
 </div> 
