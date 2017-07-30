@@ -16,14 +16,36 @@ if(username==null){ window.location='#login'; return; }
 $('#username').text(username);
 }
 
+function getSearch(){
+$('#search_output').load('/server.php?keyword='+encodeURIComponent($('#search').val()));
+}
+
+function updateSearch(){
+console.log('update_search');
+setTimeout(getSearch, 0); // simple call to getSearch(); does not work
+}
+
+function setHandlers(){
+	$('#search').keydown(updateSearch);
+	//$('#search').change(updateSearch);
+}
+
+function goHome(){
+	window.location='#home';
+	setTimeout(setHandlers, 0); // simple call to setHandlers(); does not work
+	//alert('home');
+}
+
 $(function(){
-setUsername();	
+goHome();
+setUsername();
 });
+
 </script>
 
 <div data-role="page" id="login">
   <div data-role="main" class="ui-content">
-    <form onsubmit="localStorage.setItem('username', $('#email').val()); setUsername(); window.location='#home'; return false;">
+    <form onsubmit="localStorage.setItem('username', $('#email').val()); setUsername(); goHome(); return false;">
     <input id="email" type="email" placeholder="insert your email to login" required><br>
 	<input type="submit" value="Login!">
     </form>
@@ -33,16 +55,8 @@ setUsername();
 <div data-role="page" id="home">
   <div data-role="main" class="ui-content">
     <p>Welcome <span id="username">(username)</span>!</p>
-    <input type="search" placeholder="search a tag" list="suggestions">
-
-<datalist id="suggestions">
-  <option value="Programming Language: Java">
-  <option value="Programming Language: C++">
-  <option value="Programming Language: PHP">
-  <option value="Programming Language: JavaScript">
-  <option value="Programming Language: C#">
-</datalist>
-
+    <input type="search" placeholder="search a tag" id="search">
+	<div id="search_output"></div>
     <button onclick="localStorage.removeItem('username'); setUsername();">Logout</button>
   </div>
 </div> 
