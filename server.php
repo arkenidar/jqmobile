@@ -3,7 +3,9 @@ ini_set('display_errors', 1);
 
 require 'db-user.php';
 
-$dbh = new PDO('mysql:host=localhost;dbname='.$dbname, $user, $pass);
+// init PDO
+$dbh = new PDO('mysql:host=localhost;dbname='.$dbname, $dbuser, $dbpass);
+$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $stmt = $dbh->prepare('SELECT DISTINCT tag FROM tags WHERE tag LIKE :keyword LIMIT 0, 25');
 
